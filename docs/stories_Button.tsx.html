@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>config/helper/buildType.ts - Documentation</title>
+    <title>stories/Button.tsx - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -37,7 +37,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">config/helper/buildType.ts</h1>
+    <h1 class="page-title">stories/Button.tsx</h1>
     
 
     
@@ -47,71 +47,57 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @title buildType.ts
- * @desc 빌드 타입 config
- * @package @linker/web-front
- *
- * @author linker
- * @since 2023.08.22 15:46:05
- * @version 0.1.0
- * @see =================== 변경 내역 ==================
- * &lt;pre>
- * [작성자][작업일시] - 내용
- * [wskim][2023.08.22 Tuesday 15:46:05] - 최초작성
- * &lt;/pre>
- */
-import _ from 'lodash';
+            <pre class="prettyprint source linenums"><code>/* eslint-disable operator-linebreak */
+import './button.css';
 
-/**
- * 빌드 타입 ENUM 객체
- * @date 8/24/2023 - 2:06:52 AM
- *
- * @export
- * @enum {number}
- */
-export enum BuildEnv {
-  LOCAL = 'local',
-  DEV = 'dev',
-  STG = 'stg',
-  PRD = 'prd'
+interface ButtonProps {
+  /**
+   * Is this the principal call to action on the page?
+   */
+  primary?: boolean;
+  /**
+   * What background color to use
+   */
+  backgroundColor?: string;
+  /**
+   * How large should the button be?
+   */
+  size?: 'small' | 'medium' | 'large';
+  /**
+   * Button contents
+   */
+  label: string;
+  /**
+   * Optional click handler
+   */
+  onClick?: () => void;
 }
 
 /**
- * 빌드 타입
- * @date 8/24/2023 - 2:06:52 AM
- *
- * @export
- * @typedef {BuildEnvStr}
+ * Primary UI component for user interaction
  */
-export type BuildEnvStr = keyof typeof BuildEnv;
-
-/**
- * BuildEnv 객체 변환 함수
- * @date 8/24/2023 - 2:06:52 AM
- *
- * @export
- * @param {?string} [type] 빌드타입 문자열
- * @returns {BuildEnv} BuildEnv 객체
- */
-export function toBuildEnv(type?: string) {
-  const _type = type?.toUpperCase();
-  if (_type &amp;&amp; _.has(BuildEnv, _type)) {
-    return BuildEnv[_type as BuildEnvStr];
-  }
-  return BuildEnv.DEV;
-}
-
-/**
- * 개발환경 여부 확인 함수
- * @date 8/24/2023 - 2:06:52 AM
- *
- * @export
- * @param {BuildEnv} env 빌드환경
- * @returns {boolean} 개발환경 여부
- */
-export function isDev(env: BuildEnv) {
-  return !(env === BuildEnv.PRD || env === BuildEnv.STG);
+export function Button({
+  primary = false,
+  size = 'medium',
+  backgroundColor,
+  label,
+  ...props
+}: ButtonProps) {
+  const mode = primary
+    ? 'storybook-button--primary'
+    : 'storybook-button--secondary';
+  return (
+    &lt;button
+      type="button"
+      className={['storybook-button', `storybook-button--${size}`, mode].join(
+        ' '
+      )}
+      style={{ backgroundColor }}
+      {...props}
+    >
+      {label}
+    &lt;/button>
+  );
 }
 </code></pre>
         </article>
